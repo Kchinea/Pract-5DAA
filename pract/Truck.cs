@@ -25,10 +25,39 @@ public class Truck {
   public bool CanAddZone(Zone zone, int time, int load) {
     return _currentLoad + load <= _maximumLoad && _currentTime + time <= _maximumTime;
   }
+  public Point NextPosition( PathMap zones) {
+    Point closest = zones.Zones[0].Position;
+    double minDistance = double.MaxValue;
+    foreach (Zone point in zones.Zones) {
+      double distance = _path.Last().Position.CalculateDistance(point.Position);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closest = point.Position;
+      }
+    }
+    return closest;
+  }
+    
   public override string ToString() {
     return $"Truck {_id}:\n" + 
            $"Maximum Load: {_maximumLoad}, Current Load: {_currentLoad}, " +
            $"Maximum Time: {_maximumTime}, Current Time: {_currentTime}, " +
            $"Speed: {_speed}, Path: {_path}";
     }
+
+  public Zone LastZone {
+    get => _path.Last();
+  }
+  public List<Zone> Path {
+    get => _path;
+  }
+  public int Id {
+    get => _id;
+  }
+  public int CurrentLoad {
+    get => _currentLoad;
+  } 
+  public int CurrentTime {
+    get => _currentTime;
+  }
 }

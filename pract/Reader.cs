@@ -12,10 +12,9 @@ public class Reader {
     int Lx = 0, Ly = 0;
     int maxCollectionCapacity = 0, maxDeliveryCapacity = 0;
     int speed = 0;
-    Point depotPosition = new Point(0, 0);
-    Point firstStationPosition = new Point(0, 0);
-    Point lastStationPosition = new Point(0, 0);
+    Zone  depot = new Zone(0,new Point(0, 0),0,0);
     Point dumpPosition = new Point(0, 0);
+    List<Zone> stations = new List<Zone>();
     int epsilon = 0, offset = 0, k = 0;
     List<Zone> zones = new List<Zone>();
 
@@ -55,13 +54,16 @@ public class Reader {
               speed = int.Parse(words[1]);
               break;
           case "Depot":
-              depotPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
+              Point depotPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
+              depot = new Zone(0, depotPosition, 0.0, 0.0);
               break;
           case "IF":
-              firstStationPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
+              Point firstStationPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
+              stations.Add( new Zone (-1 ,firstStationPosition, 0.0, 0.0));
               break;
           case "IF1":
-              lastStationPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
+              Point lastStationPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
+              stations.Add( new Zone (-2 ,lastStationPosition, 0.0, 0.0));
               break;
           case "Dumpsite":
               dumpPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
@@ -97,7 +99,7 @@ public class Reader {
       Instance instance = new Instance(
         maxCollectionDuration, maxDeliveryDuration, numVehicles, numZones,
         Lx, Ly, maxCollectionCapacity, maxDeliveryCapacity, speed,
-        depotPosition, firstStationPosition, lastStationPosition, dumpPosition,
+        depot, stations, dumpPosition,
         epsilon, offset, k, pathMap
         );
 

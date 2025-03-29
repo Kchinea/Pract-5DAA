@@ -4,7 +4,7 @@ namespace Pract5DAA;
 internal class Program {
   static void Main(string[] args) {
     if(args.Length != 1) {
-      Console.WriteLine("Usage: dotnet run <file>");
+      Console.WriteLine(args.Length);
       return;
     }
     string file = args[0];

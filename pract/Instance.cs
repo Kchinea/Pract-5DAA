@@ -10,9 +10,8 @@ public class Instance {
   private int _maxCollectionCapacity;
   private int _maxDeliveryCapacity;
   private int _speed;
-  private Point _depotPosition;
-  private Point _firstStationPosition;
-  private Point _lastStationPosition;
+  private Zone _depot;
+  private List<Zone> _stations;
   private Point _dumpPosition; 
   private int _epsilon;
   private int _offset;
@@ -20,7 +19,7 @@ public class Instance {
   private PathMap _zones;
 
 
-  public Instance(int maxCollectionDuration, int maxDeliveryDuration, int numVehicles, int numZones, int Lx, int Ly, int maxCollectionCapacity, int maxDeliveryCapacity, int speed, Point depotPosition, Point firstStationPosition, Point lastStationPosition, Point dumpPosition, int epsilon, int offset, int k, PathMap zones) {
+  public Instance(int maxCollectionDuration, int maxDeliveryDuration, int numVehicles, int numZones, int Lx, int Ly, int maxCollectionCapacity, int maxDeliveryCapacity, int speed, Zone depot, List<Zone> stations, Point dumpPosition, int epsilon, int offset, int k, PathMap zones) {
     this._maxCollectionDuration = maxCollectionDuration;
     this._maxDeliveryDuration = maxDeliveryDuration;
     this._numVehicles = numVehicles;
@@ -30,9 +29,8 @@ public class Instance {
     this._maxCollectionCapacity = maxCollectionCapacity;
     this._maxDeliveryCapacity = maxDeliveryCapacity;
     this._speed = speed;
-    this._depotPosition = depotPosition;
-    this._firstStationPosition = firstStationPosition;
-    this._lastStationPosition = lastStationPosition;
+    this._depot = depot;
+    this._stations = stations;
     this._dumpPosition = dumpPosition;
     this._epsilon = epsilon;
     this._offset = offset;
@@ -49,9 +47,7 @@ public class Instance {
            $"  Max Collection Capacity: {_maxCollectionCapacity}\n" +
            $"  Max Delivery Capacity: {_maxDeliveryCapacity}\n" +
            $"  Speed: {_speed}\n" +
-           $"  Depot Position: {_depotPosition}\n" +
-           $"  First Station Position: {_firstStationPosition}\n" +
-           $"  Last Station Position: {_lastStationPosition}\n" +
+           $"  Depot Position: {_depot}\n" + //hay que repasarlo, faltan las stations
            $"  Dump Position: {_dumpPosition}\n" +
            $"  Epsilon: {_epsilon}, Offset: {_offset}, k: {_k}\n" +
            $"  Zones:\n    {string.Join("\n    ", _zones)}";
@@ -72,14 +68,17 @@ public class Instance {
   public PathMap Zones {
     get => _zones;
   }
-  public Point DepotPosition {
-    get => _depotPosition;
+  public Zone Depot {
+    get => _depot;
   }
   public Point FirstStationPosition {
-    get => _firstStationPosition;
+    get => _stations[0].Position;
   }
   public Point LastStationPosition {
-    get => _lastStationPosition;
+    get => _stations[1].Position;
+  }
+  public List<Zone> Stations {
+    get => _stations;
   }
   public Point DumpPosition {
     get => _dumpPosition;

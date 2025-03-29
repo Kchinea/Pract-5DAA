@@ -11,7 +11,21 @@ public class Zone {
     this._D1 = D1;
     this._D2 = D2;
   }
+    public int TimeToNext(Zone zone, int speed) {
+    double distance = _cord.CalculateDistance(zone.Position);
+    int time = (int)Math.Ceiling(distance / speed);
+    return time;
+  }
   public override string ToString() {
     return $"Zone {_id}: Position {_cord}, D1={_D1}, D2={_D2}";
+  }
+  public int Id {
+    get => _id;
+  }
+  public Point Position {
+    get => _cord;
+  }
+  public double Load {
+    get => _D2 - _D1;
   }
 }

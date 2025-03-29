@@ -1,0 +1,15 @@
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/pract.GeneratedMSBuildEditorConfig.editorconfig
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/pract.AssemblyInfoInputs.cache
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/pract.AssemblyInfo.cs
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/pract.csproj.CoreCompileInputs.cache
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/pract.sourcelink.json
+/home/kyliam/Escritorio/Pract-5DAA/pract/bin/Debug/net9.0/pract
+/home/kyliam/Escritorio/Pract-5DAA/pract/bin/Debug/net9.0/pract.deps.json
+/home/kyliam/Escritorio/Pract-5DAA/pract/bin/Debug/net9.0/pract.runtimeconfig.json
+/home/kyliam/Escritorio/Pract-5DAA/pract/bin/Debug/net9.0/pract.dll
+/home/kyliam/Escritorio/Pract-5DAA/pract/bin/Debug/net9.0/pract.pdb
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/pract.dll
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/refint/pract.dll
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/pract.pdb
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/pract.genruntimeconfig.cache
+/home/kyliam/Escritorio/Pract-5DAA/pract/obj/Debug/net9.0/ref/pract.dll

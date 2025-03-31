@@ -55,15 +55,15 @@ public class Reader {
               break;
           case "Depot":
               Point depotPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
-              depot = new Zone(0, depotPosition, 0.0, 0.0);
+              depot = new Zone(0, depotPosition, 0, 0);
               break;
           case "IF":
               Point firstStationPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
-              stations.Add( new Zone (-1 ,firstStationPosition, 0.0, 0.0));
+              stations.Add( new Zone (-1 ,firstStationPosition, 0, 0));
               break;
           case "IF1":
               Point lastStationPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
-              stations.Add( new Zone (-2 ,lastStationPosition, 0.0, 0.0));
+              stations.Add( new Zone (-2 ,lastStationPosition, 0, 0));
               break;
           case "Dumpsite":
               dumpPosition = new Point(int.Parse(words[1]), int.Parse(words[2]));
@@ -79,11 +79,11 @@ public class Reader {
               break;
           default:
                 int id = int.Parse(words[0]);
-                int x = (int)double.Parse(words[1]);  
-                int y = (int)double.Parse(words[2]);
+                int x = int.Parse(words[1]);  
+                int y = int.Parse(words[2]);
                 Point cord = new Point(x, y);
-                double d1 = double.Parse(words[3]);
-                double d2 = double.Parse(words[4]);
+                int d1 = int.Parse(words[3]);
+                int d2 = int.Parse(words[4]);
                 zones.Add(new Zone(id,cord, d1, d2));
               break;
         }
@@ -96,14 +96,12 @@ public class Reader {
       Console.WriteLine(e.Message);
     }
       PathMap pathMap = new PathMap(zones);
-      Instance instance = new Instance(
+      Instance instance = new Instance(_file,
         maxCollectionDuration, maxDeliveryDuration, numVehicles, numZones,
         Lx, Ly, maxCollectionCapacity, maxDeliveryCapacity, speed,
         depot, stations, dumpPosition,
         epsilon, offset, k, pathMap
         );
-
-        Console.Write(instance);
         return instance;
 
   }

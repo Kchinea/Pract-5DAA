@@ -1,6 +1,7 @@
 namespace Pract5DAA;
 
 public class Instance {
+  private string _name;
   private int _maxCollectionDuration;
   private int _maxDeliveryDuration;
   private int _numVehicles;
@@ -19,7 +20,8 @@ public class Instance {
   private PathMap _zones;
 
 
-  public Instance(int maxCollectionDuration, int maxDeliveryDuration, int numVehicles, int numZones, int Lx, int Ly, int maxCollectionCapacity, int maxDeliveryCapacity, int speed, Zone depot, List<Zone> stations, Point dumpPosition, int epsilon, int offset, int k, PathMap zones) {
+  public Instance(string name,int maxCollectionDuration, int maxDeliveryDuration, int numVehicles, int numZones, int Lx, int Ly, int maxCollectionCapacity, int maxDeliveryCapacity, int speed, Zone depot, List<Zone> stations, Point dumpPosition, int epsilon, int offset, int k, PathMap zones) {
+    this._name = name;
     this._maxCollectionDuration = maxCollectionDuration;
     this._maxDeliveryDuration = maxDeliveryDuration;
     this._numVehicles = numVehicles;
@@ -53,6 +55,9 @@ public class Instance {
            $"  Zones:\n    {string.Join("\n    ", _zones)}";
   }
 
+  public string Name {
+    get => _name;
+  }
   public int MaximumTrucks {
     get => _numVehicles;
   }

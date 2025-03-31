@@ -3,9 +3,9 @@ namespace Pract5DAA;
 public class Zone {
   private int _id;
   private Point _cord;
-  private double _D1;
-  private double _D2;
-  public Zone(int id, Point cord, double D1, double D2) {
+  private int _D1;
+  private int _D2;
+  public Zone(int id, Point cord, int D1, int D2) {
     this._id = id;
     this._cord = cord;
     this._D1 = D1;
@@ -13,7 +13,7 @@ public class Zone {
   }
     public int TimeToNext(Zone zone, int speed) {
     double distance = _cord.CalculateDistance(zone.Position);
-    int time = (int)Math.Ceiling(distance / speed);
+    int time = (int)Math.Ceiling(distance / speed * 60);
     return time;
   }
   public override string ToString() {
@@ -22,10 +22,16 @@ public class Zone {
   public int Id {
     get => _id;
   }
+  public int D1 {
+    get => _D1;
+  }
+  public int D2 {
+    get => _D2;
+  }
   public Point Position {
     get => _cord;
   }
-  public double Load {
+  public int Load {
     get => _D2 - _D1;
   }
 }

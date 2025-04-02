@@ -22,16 +22,16 @@ public class Zone {
   public int Id {
     get => _id;
   }
-  public int D1 {
+  public int CollectionTime {
     get => _D1;
   }
-  public int D2 {
+  public int Load {
     get => _D2;
   }
   public Point Position {
     get => _cord;
   }
-  public int Load {
-    get => _D2 - _D1;
-  }
+  // public int Load {
+  //   get => _D2 - _D1;
+  // }
 }

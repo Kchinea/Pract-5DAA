@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/kyliam/Escritorio/Pract-5DAA/pract/pract.csproj": {}
+    "/home/kyliam/Desktop/Pract-5DAA/pract/pract.csproj": {}
   },
   "projects": {
-    "/home/kyliam/Escritorio/Pract-5DAA/pract/pract.csproj": {
+    "/home/kyliam/Desktop/Pract-5DAA/pract/pract.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/kyliam/Escritorio/Pract-5DAA/pract/pract.csproj",
+        "projectUniqueName": "/home/kyliam/Desktop/Pract-5DAA/pract/pract.csproj",
         "projectName": "pract",
-        "projectPath": "/home/kyliam/Escritorio/Pract-5DAA/pract/pract.csproj",
+        "projectPath": "/home/kyliam/Desktop/Pract-5DAA/pract/pract.csproj",
         "packagesPath": "/home/kyliam/.nuget/packages/",
-        "outputPath": "/home/kyliam/Escritorio/Pract-5DAA/pract/obj/",
+        "outputPath": "/home/kyliam/Desktop/Pract-5DAA/pract/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/kyliam/.nuget/NuGet/NuGet.Config"
@@ -43,6 +43,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Spectre.Console": {
+              "target": "Package",
+              "version": "[0.49.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -59,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -18,7 +18,7 @@ public class Algorithm1 : IAlgorithm {
           break;
         }
         Zone closest = toVisit.ClosestZone(currentTruck.LastZone.Position);
-        int timeToNext = currentTruck.LastZone.TimeToNext(closest, instance.speed);
+        int timeToNext = currentTruck.LastZone.TimeToNext(closest, instance.speed) + closest.CollectionTime;
         Zone closerStation = Stations.ClosestZone(closest.Position);
         int timeStationFromNext = closest.TimeToNext(closerStation, instance.speed);
         int timeToDepot = closerStation.TimeToNext(instance.Depot, instance.speed);

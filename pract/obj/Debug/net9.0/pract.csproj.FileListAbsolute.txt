@@ -28,3 +28,6 @@
 /home/kyliam/Desktop/Pract-5DAA/pract/bin/Debug/net9.0/pract.pdb
 /home/kyliam/Desktop/Pract-5DAA/pract/obj/Debug/net9.0/pract.genruntimeconfig.cache
 /home/kyliam/Desktop/Pract-5DAA/pract/obj/Debug/net9.0/ref/pract.dll
+/home/kyliam/Desktop/Pract-5DAA/pract/bin/Debug/net9.0/Spectre.Console.dll
+/home/kyliam/Desktop/Pract-5DAA/pract/obj/Debug/net9.0/pract.csproj.AssemblyReference.cache
+/home/kyliam/Desktop/Pract-5DAA/pract/obj/Debug/net9.0/pract.csproj.Up2Date

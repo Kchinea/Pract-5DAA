@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "WiKnGnS9gcY=",
+  "dgSpecHash": "8JV3oWfjHn8=",
   "success": true,
-  "projectFilePath": "/home/kyliam/Escritorio/Pract-5DAA/pract/pract.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/kyliam/Desktop/Pract-5DAA/pract/pract.csproj",
+  "expectedPackageFiles": [
+    "/home/kyliam/.nuget/packages/spectre.console/0.49.1/spectre.console.0.49.1.nupkg.sha512"
+  ],
   "logs": []
 }

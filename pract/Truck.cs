@@ -22,9 +22,9 @@ public class Truck {
     _currentTime += time;
     _currentLoad += load;
   }
-  public bool CanAddZone(Zone zone, int time, int load) {
-    return _currentLoad + load <= _maximumLoad && _currentTime + time <= _maximumTime;
-  }
+  // public bool CanAddZone(Zone zone, int time, int load) {
+  //   return _currentLoad + load <= _maximumLoad && _currentTime + time <= _maximumTime;
+  // }
     
   public override string ToString() {
     return $"Truck {_id}:\n" + 

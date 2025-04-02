@@ -1,9 +1,24 @@
 namespace Pract5DAA;
 
 public class Reader {
-  private string _file;
-  public Reader(string file) {
-    _file = file;
+  private string _directory;
+  public Reader(string directory) {
+    _directory = directory;
+  }
+
+  public List<Instance> ReadAll() {
+    List<Instance> instances = new List<Instance>();
+    try {
+      string[] files = Directory.GetFiles(_directory, "*.txt").OrderBy(f => f.Trim( new Char[] { 'i', '*', '.' } )).ToArray();
+      foreach (string file in files) {
+        Reader reader = new Reader(file);
+        instances.Add(reader.Read());
+      }
+    }
+    catch (Exception e) {
+      Console.WriteLine($"Error al leer archivos en {_directory}: {e.Message}");
+    }
+    return instances;
   }
   public Instance Read() {
 
@@ -21,7 +36,7 @@ public class Reader {
 
     String? line;
     try {
-      StreamReader sr = new StreamReader(this._file);
+      StreamReader sr = new StreamReader(this._directory);
       line = sr.ReadLine();
       while (line != null) {
         string[] words = line.Split(' ');
@@ -96,7 +111,7 @@ public class Reader {
       Console.WriteLine(e.Message);
     }
       PathMap pathMap = new PathMap(zones);
-      Instance instance = new Instance(_file,
+      Instance instance = new Instance(_directory,
         maxCollectionDuration, maxDeliveryDuration, numVehicles, numZones,
         Lx, Ly, maxCollectionCapacity, maxDeliveryCapacity, speed,
         depot, stations, dumpPosition,

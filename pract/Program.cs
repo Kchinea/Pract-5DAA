@@ -1,5 +1,5 @@
 ﻿﻿using Pract5DAA.Algorithm;
-using Spectre.Console;
+// using Spectre.Console;
 
 namespace Pract5DAA;
 internal class Program {

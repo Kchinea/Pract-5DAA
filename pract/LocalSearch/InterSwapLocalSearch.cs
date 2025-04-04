@@ -7,5 +7,7 @@ public class InterSwapLocalSearch : ILocalSearch {
     Solution bestSolution = new Solution();
     return bestSolution;
   }
-  
+  public bool FactibleMovement(Solution solution, int i, int j) {
+    return true;
+  }
 }

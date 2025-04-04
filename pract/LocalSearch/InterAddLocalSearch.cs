@@ -7,5 +7,7 @@ public class InterAddLocalSearch : ILocalSearch {
     Solution bestSolution = new Solution();
     return bestSolution;
   }
-  
+  public bool FactibleMovement(Solution solution, int i, int j) {
+    return true;
+  }
 }

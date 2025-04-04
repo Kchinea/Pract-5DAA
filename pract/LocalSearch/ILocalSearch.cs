@@ -1,7 +1,7 @@
 namespace Pract5DAA.LocalSearch;
-using Pract5DAA.Algorithm;
 
 public interface ILocalSearch {
   public Solution Solve(Solution solution);
+  public bool FactibleMovement(Solution solution, int i, int j);
   string GetName { get; }
 }

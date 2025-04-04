@@ -2,7 +2,8 @@ namespace Pract5DAA.Algorithm;
 
 public class Algorithm1 : IAlgorithm {
   private string _name = "Voraz";
-  public int Solve(Instance instance) {
+  public Solution Solve(Instance instance) {
+    Solution solution = new Solution();
     PathMap toVisit = new PathMap(instance.Zones.Zones);
     int timeLimit = instance.maximumTime;
     int loadLimit = instance.maximumLoad;
@@ -45,9 +46,13 @@ public class Algorithm1 : IAlgorithm {
         currentTruck.AddZone(instance.Depot, currentTruck.LastZone.TimeToNext(instance.Depot, instance.speed), 0);
       }
       vehicles.Add(currentTruck);
+      solution.TotalLoad += currentTruck.CurrentLoad;
+      solution.TotalTime += currentTruck.CurrentTime;
       num_vehicles++;
     }
-    return num_vehicles;
+    solution.NumVehicles = num_vehicles;
+    solution.Trucks = vehicles;
+    return solution;
   }
   public string GetName => _name;
 }

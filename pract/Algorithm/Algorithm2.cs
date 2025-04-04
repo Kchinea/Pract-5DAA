@@ -9,7 +9,9 @@ public class Algorithm2 : IAlgorithm {
     _num_ejecutions = num_ejecutions;
   } 
 
-  public int Solve(Instance instance) {
+  public Solution Solve(Instance instance) {
+    Solution solution = new Solution();
+    for(int i = 0; i < 100 ; i++) {
     PathMap toVisit = new PathMap(instance.Zones.Zones);
     int timeLimit = instance.maximumTime;
     int loadLimit = instance.maximumLoad;
@@ -54,7 +56,14 @@ public class Algorithm2 : IAlgorithm {
       vehicles.Add(currentTruck);
       num_vehicles++;
     }
-    return num_vehicles;
+    if (solution.NumVehicles == 0 || solution.NumVehicles > num_vehicles) {
+      solution.NumVehicles = num_vehicles;
+      solution.Trucks = vehicles;
+      solution.TotalTime = vehicles.Sum(x => x.CurrentTime);
+      solution.TotalLoad = vehicles.Sum(x => x.CurrentLoad);
+    }
+    }
+    return solution;
   }
   public string GetName => _name;
   public int NumEjecutions => _num_ejecutions;

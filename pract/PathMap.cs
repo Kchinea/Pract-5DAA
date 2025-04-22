@@ -3,7 +3,10 @@ namespace Pract5DAA;
 public class PathMap {
   private List<Zone> _zones;
   public PathMap(List<Zone> zones) {
-    _zones = new List<Zone>(zones.Select(z => new Zone(z.Id, z.Position, z.CollectionTime, z.Load)));
+    _zones = new List<Zone>(zones.Select(z => z.Clone()));
+  }
+  public PathMap Clone() {
+    return new PathMap(_zones.Select(z => z.Clone()).ToList());
   }
   public List<Zone> Zones {
     get => _zones;

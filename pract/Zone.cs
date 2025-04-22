@@ -7,9 +7,12 @@ public class Zone {
   private int _D2;
   public Zone(int id, Point cord, int D1, int D2) {
     this._id = id;
-    this._cord = cord;
+    _cord = new Point(cord.X, cord.Y); 
     this._D1 = D1;
     this._D2 = D2;
+  }
+  public Zone Clone() {
+    return new Zone(_id, _cord.Clone(), _D1, _D2);
   }
     public int TimeToNext(Zone zone, int speed) {
     double distance = _cord.CalculateDistance(zone.Position);

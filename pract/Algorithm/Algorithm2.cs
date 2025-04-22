@@ -59,7 +59,7 @@ public class Algorithm2 : IAlgorithm {
     if (solution.NumVehicles == 0 || solution.NumVehicles > num_vehicles) {
       solution.NumVehicles = num_vehicles;
       solution.Trucks = vehicles;
-      solution.TotalTime = vehicles.Sum(x => x.CurrentTime);
+      // solution.TotalTime = vehicles.Sum(x => x.CurrentTime);
       solution.TotalLoad = vehicles.Sum(x => x.CurrentLoad);
     }
     }

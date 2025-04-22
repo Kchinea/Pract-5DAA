@@ -47,7 +47,7 @@ public class Algorithm1 : IAlgorithm {
       }
       vehicles.Add(currentTruck);
       solution.TotalLoad += currentTruck.CurrentLoad;
-      solution.TotalTime += currentTruck.CurrentTime;
+      // solution.TotalTime += currentTruck.CurrentTime;
       num_vehicles++;
     }
     solution.NumVehicles = num_vehicles;

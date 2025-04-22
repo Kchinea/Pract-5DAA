@@ -23,7 +23,7 @@ internal class Program {
     List<IAlgorithm> algorithms = new List<IAlgorithm> { algorithm1, algorithm2 };
 
     // Seleccionamos una instancia y resolvemos usando el segundo algoritmo
-    Solution solution = algorithms[1].Solve(instances[7]);
+    Solution solution = algorithms[1].Solve(instances[4]);
     Console.WriteLine($"Solution: {solution.NumVehicles}");
     Console.WriteLine($"Total Time: {solution.TotalTime}");
     Console.WriteLine($"Total Load: {solution.TotalLoad}");
@@ -31,29 +31,29 @@ internal class Program {
     // Preparar el RVND con un conjunto de búsquedas locales
     // Aquí agregamos las búsquedas locales que quieres usar dentro del RVND
     List<ILocalSearch> localSearches = new List<ILocalSearch> {
-      new IntraAddLocalSearch(solution, instances[7]),
-      new IntraSwapLocalSearch(solution, instances[7]),
-      new InterAddLocalSearch(solution, instances[7]),
-      new InterSwapLocalSearch(solution, instances[7])
+      new IntraAddLocalSearch(solution, instances[4]),
+      new IntraSwapLocalSearch(solution, instances[4]),
+      new InterAddLocalSearch(solution, instances[4]),
+      new InterSwapLocalSearch(solution, instances[4])
     };
 
     // Crear el objeto RVND con las búsquedas locales y las instancias
     RVND rvnd = new RVND(localSearches, instances, solution);
 
     // Ejecutar el RVND
-    rvnd.DoRVND();
+    solution = rvnd.DoRVND();
     
     // Como ejemplo, si quieres mostrar la mejor solución final obtenida por RVND:
     Console.WriteLine($"Solution after RVND: {solution.NumVehicles}");
     Console.WriteLine($"Total Time after RVND: {solution.TotalTime}");
     Console.WriteLine($"Total Load after RVND: {solution.TotalLoad}");
 
-    // AlgoritmoFinal algoritmoFinal = new AlgoritmoFinal();
-    // solution = algoritmoFinal.Solve(solution, instances[4]);
+    AlgoritmoFinal algoritmoFinal = new AlgoritmoFinal();
+    solution = algoritmoFinal.Solve(solution, instances[4]);
 
-    // Console.WriteLine($"Solution after RVND: {solution.NumVehicles}");
-    // Console.WriteLine($"Total Time after RVND: {solution.TotalTime}");
-    // Console.WriteLine($"Total Load after RVND: {solution.TotalLoad}");
+    Console.WriteLine($"Solution after Translation operation: {solution.NumVehicles}");
+    Console.WriteLine($"Total Time after Translation operation:: {solution.TotalTime}");
+    Console.WriteLine($"Total Load after Translation operation:: {solution.TotalLoad}");
 
 
 

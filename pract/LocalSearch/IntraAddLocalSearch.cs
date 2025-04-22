@@ -22,22 +22,23 @@ public class IntraAddLocalSearch : ILocalSearch {
             continue;
           }
           Truck truckClone = truck.Clone();
-          truckClone.Path.RemoveAt(j); // Eliminamos la zona de la posición original
-          truckClone.Path.Insert(k, currentZone); // Insertamos la zona en la nueva posición
+          truckClone.Path.RemoveAt(j);
+          truckClone.Path.Insert(k, currentZone);
           Console.WriteLine($"Intentando mover la zona {currentZone.Id} de la posición {j} a la posición {k}");
           Console.WriteLine($"Estado previo de la ruta del camión {truck.Id}: {string.Join(" -> ", truckClone.Path.Select(z => z.Id))}");
           if (!FactibleMovement(truckClone)) {
-            continue; // Si no es factible, saltamos
+            continue;
           }
+          Console.WriteLine(truckClone);
+          Console.WriteLine(truck);
           int newTotalTime = 0;
           foreach (var t in bestSolution.Trucks) {
             newTotalTime += t.CurrentTime;
           }
-          if (newTotalTime < bestTotalTime) {
+          if (truckClone.CurrentTime < truck.CurrentTime) {
             bestTotalTime = newTotalTime;
-            bestSolution = bestSolution.Clone(); // Clonamos la solución para evitar modificar la original
-            bestSolution.Trucks[i] = truckClone; // Reemplazamos el camión modificado en la mejor solución
-            // bestSolution.TotalTime = newTotalTime; // Actualizamos el tiempo total
+            bestSolution = bestSolution.Clone();
+            bestSolution.Trucks[i] = truckClone;
             Console.WriteLine("Mejor solución encontrada:");
             foreach (var t in bestSolution.Trucks) {
               Console.WriteLine($"Camión {t.Id}: {string.Join(" -> ", t.Path.Select(z => z.Id))}");
@@ -56,7 +57,7 @@ public class IntraAddLocalSearch : ILocalSearch {
       Zone currentZone = truck.Path[i];
       if (currentZone.Id == -1 || currentZone.Id == -2) {
         firstStationFound = true;
-        break; // Terminamos la validación hasta la primera estación
+        break;
       }
       currentLoad += currentZone.Load;
       if (i + 1 < truck.Path.Count) {
@@ -69,27 +70,25 @@ public class IntraAddLocalSearch : ILocalSearch {
     bool lastStationFound = false;
     for (int i = truck.Path.Count - 1; i >= 0; i--) {
       Zone currentZone = truck.Path[i];
-      // Verificamos si llegamos a una estación
       if (currentZone.Id == -1 || currentZone.Id == -2) {
         lastStationFound = true;
-        break; // Terminamos la validación hasta la última estación
+        break;
       }
-      // Actualizamos la carga y el tiempo
       currentLoad += currentZone.Load;
       if (i - 1 >= 0) {
-          currentTime += currentZone.TimeToNext(truck.Path[i - 1], truck.Speed);
+        currentTime += currentZone.TimeToNext(truck.Path[i - 1], truck.Speed);
       }
     }
     if (!lastStationFound) {
       return false;
     }
     if (currentLoad > truck.MaximumLoad) {
-      return false; // La carga excede el límite
+      return false;
     }
     if (currentTime > truck.MaximumTime) {
-      return false; // El tiempo excede el límite
+      return false;
     }
     Console.WriteLine($"Carga total: {currentLoad}, Tiempo total: {currentTime}");
-    return true; // Si hemos pasado todas las comprobaciones, el movimiento es factible
+    return true;
   }
 }

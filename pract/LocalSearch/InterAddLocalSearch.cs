@@ -100,6 +100,10 @@ public Solution MovementDoBetter(Truck truckA, int idxA, Truck truckB, int idxB,
 
     truckACopy.RecalculatePath();
     truckBCopy.RecalculatePath();
+    Console.WriteLine($"Truck A: {truckACopy.CurrentTime} {truckACopy.CurrentLoad}");
+    Console.WriteLine($"Truck A Zones: {string.Join(", ", truckACopy.Path.Select(z => z.Id))}");
+    Console.WriteLine($"Truck B: {truckBCopy.CurrentTime} {truckBCopy.CurrentLoad}");
+    Console.WriteLine($"Truck B Zones: {string.Join(", ", truckBCopy.Path.Select(z => z.Id))}");
 
     if (truckACopy.CurrentTime > truckACopy.MaximumTime || truckACopy.CurrentLoad > truckACopy.MaximumLoad ||
         truckBCopy.CurrentTime > truckBCopy.MaximumTime || truckBCopy.CurrentLoad > truckBCopy.MaximumLoad) {

@@ -31,43 +31,89 @@ public class InterSwapLocalSearch : ILocalSearch {
         return bestSolution;
     }
 
-    public Solution MovementDoBetter(Truck truckA, int idxA, Truck truckB, int idxB, Solution currentSolution) {
-        // Clonar la lista de camiones para modificar
-        List<Truck> trucks = currentSolution.Trucks.Select(t => t.Clone()).ToList();
-        Truck truckACopy = trucks.First(t => t.Id == truckA.Id);
-        Truck truckBCopy = trucks.First(t => t.Id == truckB.Id);
+public Solution MovementDoBetter(Truck truckA, int idxA, Truck truckB, int idxB, Solution currentSolution) {
+    // Clonar la lista de camiones para modificar
+    List<Truck> trucks = currentSolution.Trucks.Select(t => t.Clone()).ToList();
+    Truck truckACopy = trucks.First(t => t.Id == truckA.Id);
+    Truck truckBCopy = trucks.First(t => t.Id == truckB.Id);
 
-        // Intercambiar las zonas
-        Zone tempZone = truckACopy.Path[idxA];
-        truckACopy.Path[idxA] = truckBCopy.Path[idxB];
-        truckBCopy.Path[idxB] = tempZone;
+    // Extrae la ruta real (solo zonas)
+    var pathA = truckACopy.SetPath.Select(t => t.Item1).ToList();
+    var pathB = truckBCopy.SetPath.Select(t => t.Item1).ToList();
 
-        // Recalcular ambos camiones
-        truckACopy.RecalculatePath();
-        truckBCopy.RecalculatePath();
+    // Intercambiar las zonas
+    Zone temp = pathA[idxA];
+    pathA[idxA] = pathB[idxB];
+    pathB[idxB] = temp;
 
-        // Comprobar factibilidad
-        Console.WriteLine($"TruckA: Id={truckACopy.Id}, CurrentTime={truckACopy.CurrentTime}, MaximumTime={truckACopy.MaximumTime}, CurrentLoad={truckACopy.CurrentLoad}, MaximumLoad={truckACopy.MaximumLoad}");
-        Console.WriteLine($"TruckB: Id={truckBCopy.Id}, CurrentTime={truckBCopy.CurrentTime}, MaximumTime={truckBCopy.MaximumTime}, CurrentLoad={truckBCopy.CurrentLoad}, MaximumLoad={truckBCopy.MaximumLoad}");
-        if (truckACopy.CurrentTime > truckACopy.MaximumTime || truckACopy.CurrentLoad > truckACopy.MaximumLoad)
-            return currentSolution;
-        if (truckBCopy.CurrentTime > truckBCopy.MaximumTime || truckBCopy.CurrentLoad > truckBCopy.MaximumLoad)
-            return currentSolution;
+    // Reconstruye las rutas internas (cargas y tiempos a 0, se recalculan)
+    truckACopy.SetPath = pathA.Select(z => (z, 0, 0)).ToList();
+    truckBCopy.SetPath = pathB.Select(z => (z, 0, 0)).ToList();
 
-        // Reemplazar los camiones en la solución
-        trucks.RemoveAll(t => t.Id == truckA.Id || t.Id == truckB.Id);
-        trucks.Add(truckACopy);
-        trucks.Add(truckBCopy);
+    truckACopy.RecalculatePath();
+    truckBCopy.RecalculatePath();
 
-        Solution newSolution = new Solution(trucks);
-        newSolution.TotalTime = currentSolution.TotalTime - truckA.CurrentTime - truckB.CurrentTime
-                                + truckACopy.CurrentTime + truckBCopy.CurrentTime;
-        newSolution.NumVehicles = currentSolution.NumVehicles;
+    // Comprobar factibilidad
+    if (truckACopy.CurrentTime > truckACopy.MaximumTime || truckACopy.CurrentLoad > truckACopy.MaximumLoad)
+        return currentSolution;
+    if (truckBCopy.CurrentTime > truckBCopy.MaximumTime || truckBCopy.CurrentLoad > truckBCopy.MaximumLoad)
+        return currentSolution;
 
-        Console.WriteLine($"Swapped zone {truckA.Path[idxA].Id} (Truck {truckA.Id}) with zone {truckB.Path[idxB].Id} (Truck {truckB.Id})");
+    // Reemplazar los camiones en la solución
+    trucks.RemoveAll(t => t.Id == truckA.Id || t.Id == truckB.Id);
+    trucks.Add(truckACopy);
+    trucks.Add(truckBCopy);
 
-        return newSolution;
-    }
+    Solution newSolution = new Solution(trucks);
+    newSolution.TotalTime = currentSolution.TotalTime - truckA.CurrentTime - truckB.CurrentTime
+                            + truckACopy.CurrentTime + truckBCopy.CurrentTime;
+    newSolution.NumVehicles = currentSolution.NumVehicles;
+
+    return newSolution;
+}
+    // public Solution MovementDoBetter(Truck truckA, int idxA, Truck truckB, int idxB, Solution currentSolution) {
+    //     // Clonar la lista de camiones para modificar
+    //     List<Truck> trucks = currentSolution.Trucks.Select(t => t.Clone()).ToList();
+    //     Truck truckACopy = trucks.First(t => t.Id == truckA.Id);
+    //     Truck truckBCopy = trucks.First(t => t.Id == truckB.Id);
+
+    //     // Intercambiar las zonas
+    //     Zone tempZone = truckACopy.Path[idxA];
+    //     truckACopy.SetPath[idxA] = (truckBCopy.Path[idxB], (int)truckACopy.Path[idxA].Position.CalculateDistance(truckBCopy.Path[idxB].Position) / truckACopy.Speed, truckACopy.Path[idxA].Load);
+    //     truckBCopy.SetPath[idxB] = (tempZone, (int)truckBCopy.Path[idxB].Position.CalculateDistance(tempZone.Position) / truckBCopy.Speed, tempZone.Load);
+    //     Console.WriteLine($"ANTESSSS");
+    //     Console.WriteLine($"TruckA: Id={truckACopy.Id}, CurrentTime={truckACopy.CurrentTime}, MaximumTime={truckACopy.MaximumTime}, CurrentLoad={truckACopy.CurrentLoad}, MaximumLoad={truckACopy.MaximumLoad}");
+    //     Console.WriteLine("Truck A Zones: " + string.Join(", ", truckACopy.Path.Select(z => z.Id)));
+    //     Console.WriteLine($"TruckB: Id={truckBCopy.Id}, CurrentTime={truckBCopy.CurrentTime}, MaximumTime={truckBCopy.MaximumTime}, CurrentLoad={truckBCopy.CurrentLoad}, MaximumLoad={truckBCopy.MaximumLoad}");
+    //     Console.WriteLine("Truck B Zones: " + string.Join(", ", truckBCopy.Path.Select(z => z.Id)));
+    //     // Recalcular ambos camiones
+    //     truckACopy.RecalculatePath();
+    //     truckBCopy.RecalculatePath();
+    //     Console.WriteLine($"DESPUESSSS");
+    //     // Comprobar factibilidad
+    //     Console.WriteLine($"TruckA: Id={truckACopy.Id}, CurrentTime={truckACopy.CurrentTime}, MaximumTime={truckACopy.MaximumTime}, CurrentLoad={truckACopy.CurrentLoad}, MaximumLoad={truckACopy.MaximumLoad}");
+    //     Console.WriteLine("Truck A Zones: " + string.Join(", ", truckACopy.Path.Select(z => z.Id)));
+    //     Console.WriteLine($"TruckB: Id={truckBCopy.Id}, CurrentTime={truckBCopy.CurrentTime}, MaximumTime={truckBCopy.MaximumTime}, CurrentLoad={truckBCopy.CurrentLoad}, MaximumLoad={truckBCopy.MaximumLoad}");
+    //     Console.WriteLine("Truck B Zones: " + string.Join(", ", truckBCopy.Path.Select(z => z.Id)));
+    //     if (truckACopy.CurrentTime > truckACopy.MaximumTime || truckACopy.CurrentLoad > truckACopy.MaximumLoad)
+    //         return currentSolution;
+    //     if (truckBCopy.CurrentTime > truckBCopy.MaximumTime || truckBCopy.CurrentLoad > truckBCopy.MaximumLoad)
+    //         return currentSolution;
+
+    //     // Reemplazar los camiones en la solución
+    //     trucks.RemoveAll(t => t.Id == truckA.Id || t.Id == truckB.Id);
+    //     trucks.Add(truckACopy);
+    //     trucks.Add(truckBCopy);
+
+    //     Solution newSolution = new Solution(trucks);
+    //     newSolution.TotalTime = currentSolution.TotalTime - truckA.CurrentTime - truckB.CurrentTime
+    //                             + truckACopy.CurrentTime + truckBCopy.CurrentTime;
+    //     newSolution.NumVehicles = currentSolution.NumVehicles;
+
+    //     Console.WriteLine($"Swapped zone {truckA.Path[idxA].Id} (Truck {truckA.Id}) with zone {truckB.Path[idxB].Id} (Truck {truckB.Id})");
+
+    //     return newSolution;
+    // }
 
     private bool IsBetterSolution(Solution newSolution, Solution bestSolution) {
         return newSolution.TotalTime < bestSolution.TotalTime;

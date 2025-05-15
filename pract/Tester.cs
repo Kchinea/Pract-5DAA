@@ -33,20 +33,24 @@ public class Tester {
       for(int ejecution = 1; ejecution <= algorithm.NumEjecutions; ejecution++) {
         var watch = System.Diagnostics.Stopwatch.StartNew();
         Solution solution = algorithm.Solve(_instance[i]);
-        IntraAddLocalSearch intraAddLocalSearch = new IntraAddLocalSearch();
+        IntraAddLocalSearch IntraAddLocalSearch = new IntraAddLocalSearch();
         IntraSwapLocalSearch IntraSwapLocalSearch = new IntraSwapLocalSearch();
         InterAddLocalSearch InterAddLocalSearch = new InterAddLocalSearch();
         InterSwapLocalSearch InterSwapLocalSearch = new InterSwapLocalSearch();
-        Searcher searcher = new Searcher(new List<ILocalSearch> { intraAddLocalSearch, IntraSwapLocalSearch, InterSwapLocalSearch });
+        Searcher searcher = new Searcher(new List<ILocalSearch> { IntraAddLocalSearch, IntraSwapLocalSearch});
         // Solution solutionMov = new Solution(solution.Trucks.Select(t => t.Clone()).ToList());
-        // searcher.Run(solutionMov, 100, _instance[i]);
-        // Console.WriteLine($"Algorithm sin: {_instance[i].Name}");
-        Solution solutionMov = IntraSwapLocalSearch.Solve(solution, _instance[i].Zones);
-        // Solution solutionMov = InterAddLocalSearch.Solve(solution, _instance[i].Zones);
         watch.Stop();
         var elapsedNs = watch.Elapsed.Microseconds;
         _table.AddRow(_instance[i].Name, _instance[i].Zones.Zones.Count.ToString(), "0", ejecution.ToString(), solution.NumVehicles.ToString(), solution.TotalTime.ToString(), "0", elapsedNs.ToString());
-        _table.AddRow(_instance[i].Name, _instance[i].Zones.Zones.Count.ToString(), "0", ejecution.ToString(), solutionMov.NumVehicles.ToString(), solutionMov.TotalTime.ToString(), "0", elapsedNs.ToString());
+        var watchPlus = System.Diagnostics.Stopwatch.StartNew();
+        solution = searcher.Run(solution, _instance[i]);
+        watchPlus.Stop();
+        // Console.WriteLine($"Algorithm sin: {_instance[i].Name}");
+        // Solution solutionMov = InterSwapLocalSearch.Solve(solution, _instance[i].Zones);
+        // Solution solutionMov = InterAddLocalSearch.Solve(solution, _instance[i].Zones);
+        var elapsedNsPlus = watchPlus.Elapsed.Microseconds;
+
+        _table.AddRow(_instance[i].Name, _instance[i].Zones.Zones.Count.ToString(), "0", ejecution.ToString(), solution.NumVehicles.ToString(), solution.TotalTime.ToString(), "0", elapsedNsPlus.ToString());
       }
     }
     AnsiConsole.Write(_table);

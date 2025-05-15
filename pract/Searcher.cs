@@ -14,36 +14,35 @@ public class Searcher {
       _active.Add(true);
     }
   }
-  public void Run(Solution solution, int iterations, Instance instance) {
-    // Inicializa todas activas
-    for (int i = 0; i < _localSearches.Count; i++) {
-        _active[i] = true;
-    }
-
+  public Solution Run(Solution solution, Instance instance) {
     while (_active.Contains(true)) {
-        // Elige aleatoriamente una búsqueda local activa
-        var activeIndices = _active
-            .Select((isActive, idx) => new { isActive, idx })
-            .Where(x => x.isActive)
-            .Select(x => x.idx)
-            .ToList();
-
-        int index = activeIndices[_rand.Next(activeIndices.Count)];
-        ILocalSearch localSearch = _localSearches[index];
-
-        Solution newSolution = localSearch.Solve(solution, instance.Zones);
-        Console.WriteLine($"LocalSearch: {localSearch.GetName} - {newSolution.TotalTime}");
-        Console.WriteLine($"Solution: {solution.TotalTime}");
-        Console.WriteLine($"Solution: {newSolution.TotalTime}");
-        if (newSolution != null && newSolution.TotalTime < solution.TotalTime) {
-            // Si mejora, actualiza la solución y reactiva todas
-            solution = newSolution;
-            for (int i = 0; i < _active.Count; i++) _active[i] = true;
-        } else {
-            // Si no mejora, desactiva esta búsqueda local
-            _active[index] = false;
+        int actives = _active.FindAll(x => x == true).Count;
+        int index = _rand.Next(0, actives);
+        int counter = 0;
+        for(int i = 0; i < _active.Count; i++) {
+            if (_active[i]) {
+                counter++;
+                if (counter == index) {
+                    bool improve = true;
+                    while (improve) {
+                        ILocalSearch localSearch = _localSearches[i];
+                        Solution newSolution = localSearch.Solve(solution, instance.Zones);
+                        Console.WriteLine($"LocalSearch: {localSearch.GetName} - {newSolution.TotalTime}, {solution.TotalTime}");
+                        if (newSolution.TotalTime < solution.TotalTime) {
+                            solution = newSolution;
+                            for (int j = 0; j < _active.Count; j++) {
+                                _active[j] = true;
+                            }
+                        } else {
+                            _active[i] = false;
+                            improve = false;
+                        }
+                    }
+                }
+            }
         }
     }
-  }
+    return solution;
+}
 
 }

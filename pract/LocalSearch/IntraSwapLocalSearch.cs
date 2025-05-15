@@ -42,7 +42,7 @@ public class IntraSwapLocalSearch : ILocalSearch {
         truckCopy.RecalculatePath();
 
         if (truckCopy.CurrentTime > truckCopy.MaximumTime || truckCopy.CurrentLoad > truckCopy.MaximumLoad)
-            return currentSolution; // No es factible, devolvemos solución original
+            return currentSolution;
 
         // Reemplazar el camión en la solución
         trucks.RemoveAll(t => t.Id == truck.Id);

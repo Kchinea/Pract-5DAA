@@ -99,13 +99,10 @@ public void RecalculatePath()
             var prevZone = _path[i - 1].zone;
             time = (int)(prevZone.Position.CalculateDistance(zone.Position) / _speed);
         }
-        if(_path[i].zone.Id < 0) {
-            load = 0;
-        }
         _currentTime += time;
         _currentLoad += load;
         newPath.Add((zone, _currentLoad, _currentTime));
     }
-    _path = newPath;
+    SetPath = newPath;
 }
 }

@@ -88,4 +88,10 @@ public class Instance {
   public Point DumpPosition {
     get => _dumpPosition;
   }
+  public int maxDeliveryDuration {
+    get => _maxDeliveryDuration;
+  }
+  public int maxDeliveryCapacity {
+    get => _maxDeliveryCapacity;
+  }
 }

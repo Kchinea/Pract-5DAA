@@ -58,7 +58,7 @@ public class IntraAddLocalSearch : ILocalSearch {
         newSolution.TotalTime = currentSolution.TotalTime - truck.CurrentTime + truckCopy.CurrentTime;
         newSolution.NumVehicles = currentSolution.NumVehicles;
 
-        Console.WriteLine($"Truck {truck.Id} moved {movedZone.Id} from {i} to {j}, new time: {truckCopy.CurrentTime}");
+        // Console.WriteLine($"Truck {truck.Id} moved {movedZone.Id} from {i} to {j}, new time: {truckCopy.CurrentTime}");
 
         return newSolution;
     }

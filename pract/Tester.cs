@@ -44,22 +44,8 @@ public class Tester {
         Solution solution = algorithm.Solve(_instance[i]);
         TransportPart transportPart = new TransportPart(solution, _instance[i]);
         (List<TransporTruck>, int) transport = transportPart.DoTransport();
-        Console.WriteLine("TransportPart Debug Info:");
-        Console.WriteLine($"TransportTrucks count: {transport.Item1.Count}");
-        for (int t = 0; t < transport.Item1.Count; t++)
-        {
-          var truck = transport.Item1[t];
-          Console.WriteLine($"  Truck {t + 1}:");
-          Console.WriteLine($"    Zones: {string.Join(", ", truck.Path.Select(z => z.Id))}");
-          Console.WriteLine($"    Total Time: {truck.CurrentTime}");
-          Console.WriteLine($"    Capacity Used: {truck.CurrentLoad}");
-        }
-        Console.WriteLine($"Transport int (Item2): {transport.Item2}");
-        Console.WriteLine($"NumVehicles (TransportPart.NumVehicles): {transportPart.NumVehicles}");
-        Console.WriteLine($"TransportPart.TotalTime: {transportPart.TotalTime}");
         int transportVehicles = transportPart.NumVehicles;
         solution.TotalTime = solution.TotalTime + transport.Item2;
-
 watch.Stop();
 var elapsedNs = watch.Elapsed.Microseconds;
 
@@ -67,13 +53,17 @@ var elapsedNs = watch.Elapsed.Microseconds;
 _table.AddRow(_instance[i].Name, _instance[i].Zones.Zones.Count.ToString(), "0", ejecution.ToString(), solution.NumVehicles.ToString(), solution.TotalTime.ToString(), transportVehicles.ToString(), elapsedNs.ToString());
 
 var watchPlus = System.Diagnostics.Stopwatch.StartNew();
-// NO sobreescribas solution, usa otra variable
-Solution improvedSolution = searcher.Run(solution, _instance[i]);
+        // NO sobreescribas solution, usa otra variable
+        Solution improvedSolution = searcher.Run(solution, _instance[i]);
+TransportPart transportPartImproved = new TransportPart(improvedSolution, _instance[i]);
+        (List<TransporTruck>, int) transportImproved = transportPartImproved.DoTransport();
+        int transportVehiclesImproved = transportPartImproved.NumVehicles;
+        improvedSolution.TotalTime = improvedSolution.TotalTime + transportImproved.Item2;
 watchPlus.Stop();
 var elapsedNsPlus = watchPlus.Elapsed.Microseconds;
 
 // Ahora añade la fila con la solución mejorada
-_table.AddRow(_instance[i].Name, _instance[i].Zones.Zones.Count.ToString(), "0", ejecution.ToString(), improvedSolution.NumVehicles.ToString(), improvedSolution.TotalTime.ToString(), "0", elapsedNsPlus.ToString());
+_table.AddRow(_instance[i].Name, _instance[i].Zones.Zones.Count.ToString(), "0", ejecution.ToString(), improvedSolution.NumVehicles.ToString(), improvedSolution.TotalTime.ToString(), transportVehiclesImproved.ToString(), elapsedNsPlus.ToString());
       }
     }
     AnsiConsole.Write(_table);
